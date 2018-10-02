@@ -39,3 +39,6 @@ class MainCommands:
         gif = random.choice(gifs)
         embed.set_thumbnail(url=gif)
         await ctx.send(embed=embed)
+
+def setup(bot):
+    bot.add_cog(Commands(bot))
