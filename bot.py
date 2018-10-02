@@ -14,7 +14,6 @@ async def on_ready():
     modules = ["Owner", "Commands"]
     print(f"Logged in as {bot.user} ({bot.user.id}).")
     await bot.change_presence(status='dnd', activity=discord.Activity(name=f"Starting...", type=3))
-    bot.remove_command('help')
     for module in modules:
         bot.load_extension(f"modules.{module}")
         print(f"Loaded {module}!")
