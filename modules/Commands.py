@@ -10,11 +10,11 @@ class Commands:
         self.bot = bot
 
     async def on_member_join(self, member):
-        channel = discord.utils.get(guild.channels, id=291558908978397184)
+        channel = discord.utils.get(member.guild.channels, id=291558908978397184)
         await channel.send(f"Welcome {member.mention} to {member.guild}! Before you chat read <#458922597049171988>. Enjoy your stay!")
 
     async def on_member_remove(self, member):
-        channel = discord.utils.get(guild.channels, id=291558908978397184)
+        channel = discord.utils.get(member.guild.channels, id=291558908978397184)
         m = await channel.send(f"**{member}** just left **{member.guild.name}**. Press :regional_indicator_f: to pay respects.")
         await m.add_reaction('🇫')
 
