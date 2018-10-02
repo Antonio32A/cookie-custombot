@@ -11,8 +11,8 @@ import io
 import datetime
 from collections import Counter
 
-class Admin:
-    """Admin-only commands that make the bot dynamic."""
+class Owner:
+    """Owner-only commands that make the bot dynamic."""
 
     def __init__(self, bot):
         self.bot = bot
@@ -248,4 +248,4 @@ class Admin:
             await ctx.send(fmt)
 
 def setup(bot):
-    bot.add_cog(Admin(bot))
+    bot.add_cog(Owner(bot))
