@@ -216,6 +216,3 @@ class Owner:
             await ctx.send('Too many results...', file=discord.File(fp, 'results.txt'))
         else:
             await ctx.send(fmt)
-
-def setup(bot):
-    bot.add_cog(Owner(bot))

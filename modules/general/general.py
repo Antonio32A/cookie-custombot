@@ -5,7 +5,7 @@ import time
 import random
 
 
-class Commands:
+class General:
     def __init__(self, bot):
         self.bot = bot
 
@@ -55,6 +55,3 @@ class Commands:
         gif = random.choice(gifs)
         embed.set_thumbnail(url=gif)
         await ctx.send(embed=embed)
-
-def setup(bot):
-    bot.add_cog(Commands(bot))

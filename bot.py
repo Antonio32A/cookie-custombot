@@ -48,7 +48,7 @@ class Bot(commands.AutoShardedBot):
 
 
     def start_bot(self):
-        modules = ["Owner", "Commands"]
+        modules = ["owner", "general"]
         for module in modules:
             self.load_extension(f"modules.{module}")
             print(f"Loaded {module}.")
