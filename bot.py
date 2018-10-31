@@ -42,6 +42,7 @@ class Bot(commands.AutoShardedBot):
         fnt2 = ImageFont.truetype('Ubuntu-B.ttf', 50)
         d = ImageDraw.Draw(img)
         d.text((50, 30), name, font=fnt, fill=(255, 255, 255))
+        subs = "{:,}".format(subs).replace(",", ", ")
         d.text((50, 120), str("has " + str(subs) + " subs"), font=fnt2, fill=(255, 255, 255))
         img.save('sm.png')
         await destination.send(file=discord.File('sm.png'))
