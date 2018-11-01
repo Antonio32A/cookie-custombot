@@ -48,6 +48,18 @@ class Bot(commands.AutoShardedBot):
         await destination.send(file=discord.File('sm.png'))
 
 
+    async def on_command_error(self, ctx, error):
+        command = ctx.command
+        error = getattr(error, 'original', error)
+
+        if isinstance(error, commands.CommandNotFound):
+            return
+        if isinstance(error, discord.errors.Forbidden):
+            return await ctx.send("I lack permissions to execute this command.")
+        else:
+            print(f"Exception in command {command}:\n{error}")
+
+
     def start_bot(self):
         modules = ["owner", "general"]
         for module in modules:
@@ -61,11 +73,11 @@ class Bot(commands.AutoShardedBot):
         guild = discord.utils.get(self.guilds, id=291558782755012610)
         channel = discord.utils.get(guild.channels, id=291558908978397184)
         await self.update_activity()
-        await self.send_subcount(destination=channel,
-                                     name="SICKmania",
-                                     subs=None,
-                                     id="UCvVI98ezn4TpX5wDMZjMa3g",
-                                     color="random")
+        #await self.send_subcount(destination=channel,
+        #                             name="SICKmania",
+        #                             subs=None,
+        #                             id="UCvVI98ezn4TpX5wDMZjMa3g",
+        #                             color="random")
         print(f"Logged in as {self.user} ({self.user.id})")
 
 if __name__ == '__main__':
