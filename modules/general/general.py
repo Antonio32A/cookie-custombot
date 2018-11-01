@@ -26,6 +26,7 @@ class General:
     async def subcount(self, ctx, color: str=None):
         if color == None:
             color = "random"
+        await ctx.trigger_typing()
         await ctx.bot.send_subcount(destination=ctx.channel,
                                     name="SICKmania",
                                     subs=None,

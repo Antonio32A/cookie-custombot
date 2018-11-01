@@ -38,8 +38,8 @@ class Bot(commands.AutoShardedBot):
                 color = tuple(int(color[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
 
         img = Image.new('RGB', (462, 206), color = color)
-        fnt = ImageFont.truetype('Ubuntu-B.ttf', 70)
-        fnt2 = ImageFont.truetype('Ubuntu-B.ttf', 50)
+        fnt = ImageFont.truetype('Whitney.ttf', 70)
+        fnt2 = ImageFont.truetype('Whitney.ttf', 50)
         d = ImageDraw.Draw(img)
         d.text((50, 30), name, font=fnt, fill=(255, 255, 255))
         subs = "{:,}".format(subs).replace(",", ", ")
