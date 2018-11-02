@@ -8,9 +8,8 @@ import aiohttp
 import random
 
 class Bot(commands.AutoShardedBot):
-    def __init__(self):
-        super().__init__(command_prefix=commands.when_mentioned_or("?"),
-                         owner_id=166630166825664512)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     async def update_activity(self):
         guild = discord.utils.get(self.guilds, id=291558782755012610)
@@ -59,26 +58,21 @@ class Bot(commands.AutoShardedBot):
         else:
             print(f"Exception in command {command}:\n{error}")
 
-
-    def start_bot(self):
-        modules = ["owner", "general"]
-        for module in modules:
-            self.load_extension(f"modules.{module}")
-            print(f"Loaded {module}.")
+    async def load_plugins(self):
+        plugins = ["owner", "general"]
+        for plugin in plugins:
+            self.load_extension(f"plugins.{plugin}")
+            print(f"Loaded {plugin}.")
         print("Starting...")
-        token = os.getenv('token')
-        super().run(token)
 
     async def on_ready(self):
+        await self.load_plugins()
+        await self.update_activity()
         guild = discord.utils.get(self.guilds, id=291558782755012610)
         channel = discord.utils.get(guild.channels, id=291558908978397184)
-        await self.update_activity()
-        #await self.send_subcount(destination=channel,
-        #                             name="SICKmania",
-        #                             subs=None,
-        #                             id="UCvVI98ezn4TpX5wDMZjMa3g",
-        #                             color="random")
+        await self.send_subcount(destination=channel,
+                                 name="SICKmania",
+                                 subs=None,
+                                 id="UCvVI98ezn4TpX5wDMZjMa3g",
+                                 color="random")
         print(f"Logged in as {self.user} ({self.user.id})")
-
-if __name__ == '__main__':
-    Bot().start_bot()
