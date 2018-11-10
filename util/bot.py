@@ -47,6 +47,24 @@ class Bot(commands.AutoShardedBot):
         await destination.send(file=discord.File('sm.png'))
 
 
+    async def get_mee6_users(self, guild_id):
+        page = 0
+        users = []
+        url = 'https://mee6.xyz/api/plugins/levels/leaderboard/' + str(guild_id) + '?limit=999&page='
+        while True:
+            url2 = url + str(page)
+            async with aiohttp.ClientSession() as session:
+                r = await session.get(url=url2)
+                data = json.loads(await r.read())
+                r.close()
+            if data['players'] == []:
+                break
+            elif data['players'] != []:
+                users += data['players']
+                page += 1
+        return users
+
+
     async def on_command_error(self, ctx, error):
         command = ctx.command
         error = getattr(error, 'original', error)

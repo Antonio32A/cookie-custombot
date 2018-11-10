@@ -4,7 +4,6 @@ import os
 import time
 import random
 
-
 class General:
     def __init__(self, bot):
         self.bot = bot
@@ -32,6 +31,44 @@ class General:
                                     subs=None,
                                     id="UCvVI98ezn4TpX5wDMZjMa3g",
                                     color=color)
+
+    @commands.command(aliases=["m6r"])
+    async def mee6rank(self, ctx, member: discord.Member=None):
+        if member == None:
+            member = ctx.author
+        msg = await ctx.send("Getting data...")
+        users = await ctx.bot.get_mee6_users(ctx.guild.id)
+        await msg.delete()
+        id = member.id
+        place = 0
+        for user in users:
+            place += 1
+            if int(user['id']) == id:
+                avatar = f"https://media.discordapp.net/avatars/{str(user['id'])}/{user['avatar']}.png"
+                username = f"{user['username']}#{user['discriminator']}"
+                level = str(user['level'])
+                xp = user['xp']
+                xp = "{:,}".format(xp)
+                xp1 = user['detailed_xp'][0]
+                xp2 = user['detailed_xp'][1]
+                xp_to_levelup = xp2 - xp1
+                xp_percentage = 100 - round((xp1/xp2)*100)
+                xp1 = "{:,}".format(xp1)
+                xp2 = "{:,}".format(xp2)
+                messages = round(xp_to_levelup/20)
+                messages = "{:,}".format(messages)
+                xp_to_levelup = "{:,}".format(xp_to_levelup)
+
+                embed = discord.Embed(color=ctx.author.color)
+                embed.set_author(icon_url=avatar, name=f"Mee6 Level Stats for {member}")
+                embed.add_field(name="Level", value=level, inline=False)
+                embed.add_field(name="Place on Leaderboard", value="#" + str(place), inline=False)
+                embed.add_field(name="Total XP", value=str(xp) + " XP", inline=False)
+                embed.add_field(name="Level XP", value=f"**{str(xp1)}** XP out of **{str(xp2)}** XP\n"
+                                                       f"**{str(xp_to_levelup)}** XP (**{str(xp_percentage)}%**) needed to levelup.\n"
+                                                       f"Thats about **{str(messages)}** messages!")
+                embed.set_thumbnail(url=avatar)
+                await ctx.send(embed=embed)
 
     @commands.command()
     async def ping(self, ctx):
