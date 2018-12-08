@@ -1,3 +1,5 @@
 __pycache__
 *.pyc
 sm.png
+data.json
+.env

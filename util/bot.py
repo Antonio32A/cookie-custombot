@@ -6,6 +6,7 @@ import asyncio
 from PIL import Image, ImageDraw, ImageFont
 import aiohttp
 import random
+from util.handlers import Handlers
 
 class Bot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
@@ -77,13 +78,19 @@ class Bot(commands.AutoShardedBot):
             print(f"Exception in command {command}:\n{error}")
 
     async def load_plugins(self):
-        plugins = ["owner", "general"]
+        plugins = ["owner", "general", "admin", "economy"]
         for plugin in plugins:
             self.load_extension(f"plugins.{plugin}")
             print(f"Loaded {plugin}.")
         print("Starting...")
 
+
     async def on_ready(self):
+        print("Starting...")
+        Handlers.JSON.settings_setup(self)
+        Handlers.JSON.guild_setup(self)
+        Handlers.JSON.read()
+        print("Setup the Database")
         await self.load_plugins()
         await self.update_activity()
         guild = discord.utils.get(self.guilds, id=291558782755012610)
@@ -94,3 +101,4 @@ class Bot(commands.AutoShardedBot):
                                  id="UCvVI98ezn4TpX5wDMZjMa3g",
                                  color="random")
         print(f"Logged in as {self.user} ({self.user.id})")
+        await Handlers.JSON.startUserTimelyCooldown()

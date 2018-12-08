@@ -3,10 +3,18 @@ from discord.ext import commands
 import os
 import time
 import random
+from util import Handlers
 
 class General:
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command()
+    async def prefix(self, ctx):
+        prefix = Handlers.JSON.read()["guilds"][str(ctx.guild.id)]["prefix"]
+        return await ctx.send(f"My prefix is {prefix}".replace("@", "@\u200B"))
+
+
 
     async def on_member_join(self, member):
         if member.guild.id == 291558782755012610:
@@ -31,6 +39,7 @@ class General:
                                     subs=None,
                                     id="UCvVI98ezn4TpX5wDMZjMa3g",
                                     color=color)
+
 
     @commands.command(aliases=["m6r"])
     async def mee6rank(self, ctx, member: discord.Member=None):
@@ -70,6 +79,7 @@ class General:
                 embed.set_thumbnail(url=avatar)
                 await ctx.send(embed=embed)
 
+
     @commands.command()
     async def ping(self, ctx):
         b = time.monotonic()
@@ -92,4 +102,4 @@ class General:
         "https://digitalsynopsis.com/wp-content/uploads/2016/06/loading-animations-preloader-gifs-ui-ux-effects-29.gif"]
         gif = random.choice(gifs)
         embed.set_thumbnail(url=gif)
-        await ctx.send(embed=embed)
+        return await ctx.send(embed=embed)

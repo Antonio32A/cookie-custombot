@@ -6,6 +6,7 @@ import inspect
 import textwrap
 from contextlib import redirect_stdout
 import io
+import aiohttp
 
 # to expose to the eval command
 import datetime
@@ -36,6 +37,30 @@ class Owner:
             return f'```py\n{e.__class__.__name__}: {e}\n```'
         return f'```py\n{e.text}{"^":>{e.offset}}\n{e.__class__.__name__}: {e}```'
 
+
+    @commands.command(aliases=["pfp", "picture", "avatar", "icon"])
+    async def setpfp(self, ctx, url: str=None):
+        if url == None:
+            try:
+                url = ctx.message.attachements[0]
+            except:
+                return await ctx.send("You have to provide an image url or attached image.")
+
+        async with aiohttp.ClientSession() as session:
+            r = await session.get(url=url)
+            data = await r.read()
+            await ctx.bot.user.edit(avatar=data)
+            r.close()
+        await ctx.send("Done!")
+
+
+    @commands.command(aliases=["name", "username", "setname"])
+    async def setusername(self, ctx, *, name: str=None):
+        if name == None:
+            return await ctx.send("You have to provide a name.")
+
+        await ctx.bot.user.edit(username=name)
+        await ctx.send("Done!")
 
     @commands.command(pass_context=True, hidden=True, name='eval')
     async def _eval(self, ctx, *, body: str):
