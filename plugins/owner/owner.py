@@ -12,7 +12,7 @@ import aiohttp
 import datetime
 from collections import Counter
 
-class Owner:
+class Owner(commands.Cog, name="Owner"):
     """Owner-only commands that make the bot dynamic."""
 
     def __init__(self, bot):

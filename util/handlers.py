@@ -27,9 +27,12 @@ class Handlers:
             while True:
                 data = Handlers.JSON.read()
                 for i in data["guilds"]:
-                    for j in data["guilds"][str(i)]["economy"]["users"]:
-                        if not int(data["guilds"][str(i)]["economy"]["users"][j]["userCooldown"]) == 0:
-                            data["guilds"][str(i)]["economy"]["users"][j]["userCooldown"] -= 1
+                    try:
+                        for j in data["guilds"][str(i)]["economy"]["users"]:
+                            if not int(data["guilds"][str(i)]["economy"]["users"][j]["userCooldown"]) == 0:
+                                data["guilds"][str(i)]["economy"]["users"][j]["userCooldown"] -= 1
+                    except:
+                        pass
 
                 Handlers.JSON.dump(data)
                 await asyncio.sleep(1)

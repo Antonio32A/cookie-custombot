@@ -90,7 +90,7 @@ class Bot(commands.AutoShardedBot):
         Handlers.JSON.settings_setup(self)
         Handlers.JSON.guild_setup(self)
         Handlers.JSON.read()
-        print("Setup the Database")
+        print("Setup the Database and started timely cooldown timer.")
         await self.load_plugins()
         await self.update_activity()
         guild = discord.utils.get(self.guilds, id=291558782755012610)
@@ -98,7 +98,7 @@ class Bot(commands.AutoShardedBot):
         await self.send_subcount(destination=channel,
                                  name="SICKmania",
                                  subs=None,
-                                 id="UCvVI98ezn4TpX5wDMZjMa3g",
+                                 id="UCJ3bS7jUMXSJA0SvjEVkQkA",
                                  color="random")
         print(f"Logged in as {self.user} ({self.user.id})")
         await Handlers.JSON.startUserTimelyCooldown()

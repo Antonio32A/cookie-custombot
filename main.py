@@ -11,7 +11,15 @@ else:
 
 def get_pre(bot, message):
     id = bot.user.id
-    l = [f"<@{id}> ", f"<@!{id}> ", Handlers.JSON.read()["guilds"][str(message.guild.id)]["prefix"]]
+    l = [f"<@{id}> ", f"<@!{id}> "]
+    # In case it fails for some reason
+    for i in range(0, 5):
+        try:
+            prefix = Handlers.JSON.read()["guilds"][str(message.guild.id)]["prefix"]
+            l.append(prefix)
+        except:
+            continue
+        break
     return l
 
 

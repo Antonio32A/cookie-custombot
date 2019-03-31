@@ -5,7 +5,7 @@ import time
 import random
 from util import Handlers
 
-class General:
+class General(commands.Cog, name="General"):
     def __init__(self, bot):
         self.bot = bot
 
@@ -15,13 +15,14 @@ class General:
         return await ctx.send(f"My prefix is {prefix}".replace("@", "@\u200B"))
 
 
-
+    @commands.Cog.listener()
     async def on_member_join(self, member):
         if member.guild.id == 291558782755012610:
             channel = discord.utils.get(member.guild.channels, id=291558908978397184)
             await channel.send(f"Welcome {member.mention} to {member.guild}! Before you chat read <#458922597049171988>. Enjoy your stay!")
             await self.bot.update_activity()
 
+    @commands.Cog.listener()
     async def on_member_remove(self, member):
         if member.guild.id == 291558782755012610:
             channel = discord.utils.get(member.guild.channels, id=291558908978397184)
@@ -37,7 +38,7 @@ class General:
         await ctx.bot.send_subcount(destination=ctx.channel,
                                     name="SICKmania",
                                     subs=None,
-                                    id="UCvVI98ezn4TpX5wDMZjMa3g",
+                                    id="UCJ3bS7jUMXSJA0SvjEVkQkA",
                                     color=color)
 
 
@@ -78,7 +79,6 @@ class General:
                                                        f"Thats about **{str(messages)}** messages!")
                 embed.set_thumbnail(url=avatar)
                 await ctx.send(embed=embed)
-
 
     @commands.command()
     async def ping(self, ctx):

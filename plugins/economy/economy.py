@@ -3,7 +3,7 @@ from discord.ext import commands
 from util import Handlers, Checks
 import random
 
-class Economy:
+class Economy(commands.Cog, name="Economy"):
     def __init__(self, bot):
         self.bot = bot
 
