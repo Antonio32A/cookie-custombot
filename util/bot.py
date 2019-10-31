@@ -13,10 +13,9 @@ class Bot(commands.AutoShardedBot):
         super().__init__(*args, **kwargs)
 
     async def update_activity(self):
-        guild = discord.utils.get(self.guilds, id=291558782755012610)
-        member_count = str(len(guild.members))
-        activity = discord.Activity(name=f"with {member_count} members!",
-                                    type=discord.ActivityType.playing)
+        member_count = len(self.get_all_members())
+        activity = discord.Activity(name=f"to {member_count} members!",
+                                    type=discord.ActivityType.listening)
         await self.change_presence(activity=activity)
 
 
@@ -93,12 +92,5 @@ class Bot(commands.AutoShardedBot):
         print("Setup the Database and started timely cooldown timer.")
         await self.load_plugins()
         await self.update_activity()
-        guild = discord.utils.get(self.guilds, id=291558782755012610)
-        channel = discord.utils.get(guild.channels, id=291558908978397184)
-        await self.send_subcount(destination=channel,
-                                 name="SICKmania",
-                                 subs=None,
-                                 id="UCJ3bS7jUMXSJA0SvjEVkQkA",
-                                 color="random")
         print(f"Logged in as {self.user} ({self.user.id})")
         await Handlers.JSON.startUserTimelyCooldown()

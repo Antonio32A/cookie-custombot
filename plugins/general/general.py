@@ -14,31 +14,17 @@ class General(commands.Cog, name="General"):
         prefix = Handlers.JSON.read()["guilds"][str(ctx.guild.id)]["prefix"]
         return await ctx.send(f"My prefix is {prefix}".replace("@", "@\u200B"))
 
-
-    @commands.Cog.listener()
-    async def on_member_join(self, member):
-        if member.guild.id == 291558782755012610:
-            channel = discord.utils.get(member.guild.channels, id=291558908978397184)
-            await channel.send(f"Welcome {member.mention} to {member.guild}! Before you chat read <#458922597049171988>. Enjoy your stay!")
-            await self.bot.update_activity()
-
-    @commands.Cog.listener()
-    async def on_member_remove(self, member):
-        if member.guild.id == 291558782755012610:
-            channel = discord.utils.get(member.guild.channels, id=291558908978397184)
-            m = await channel.send(f"**{member}** just left **{member.guild.name}**. Press :regional_indicator_f: to pay respects.")
-            await m.add_reaction('🇫')
-            await self.bot.update_activity()
-
     @commands.command()
-    async def subcount(self, ctx, color: str=None):
+    async def subcount(self, ctx, color: str=None, id: str=None):
+        if id == None:
+            return await ctx.send("Please specify a valid youtube channel id.")
         if color == None:
             color = "random"
         await ctx.trigger_typing()
         await ctx.bot.send_subcount(destination=ctx.channel,
-                                    name="SICKmania",
+                                    name=id,
                                     subs=None,
-                                    id="UCJ3bS7jUMXSJA0SvjEVkQkA",
+                                    id=id,
                                     color=color)
 
 
